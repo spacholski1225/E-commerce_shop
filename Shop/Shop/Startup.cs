@@ -26,7 +26,15 @@ namespace Shop
             services.AddDbContext<ShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ShopDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequiredLength = 3;
+                opt.Password.RequiredUniqueChars = 0;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<ShopDbContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +55,7 @@ namespace Shop
 
             app.UseRouting();
 
-          //  app.UseAuthorization();
+            //  app.UseAuthorization();
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
