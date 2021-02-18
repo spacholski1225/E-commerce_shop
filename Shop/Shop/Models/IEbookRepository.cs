@@ -9,5 +9,9 @@ namespace Shop.Models
     {
         IEnumerable<Ebook> GetAllEbooks { get; }
         Ebook GetEbookById(int ebookId);
+        Ebook Add(Ebook ebook);
+        Ebook Delete(Ebook ebook);
+        Ebook Update(Ebook ebook);
+
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Shop.Models;
+using Shop.ViewModels;
 
 namespace Shop
 {
@@ -26,6 +28,7 @@ namespace Shop
             services.AddDbContext<ShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IEbookRepository, EbookViewModel>();
             services.AddIdentity<IdentityUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 3;
