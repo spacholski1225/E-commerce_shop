@@ -28,7 +28,7 @@ namespace Shop
             services.AddDbContext<ShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IEbookRepository, EbookViewModel>();
+            services.AddScoped<IEbookRepository, SqlEbookRepository>();
             services.AddIdentity<IdentityUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 3;

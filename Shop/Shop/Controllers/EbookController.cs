@@ -25,10 +25,10 @@ namespace Shop.Controllers
         }
 
         //TO DO naprawidz mechanizm wyswietlania sie wszystkich ebookow po przejsciu na liste
-        public IActionResult List()
+        public ViewResult List()
         {
-            var ebooks = context.Ebooks;
-            return View(ebooks.ToList());
+            var ebooks = context.Ebooks.
+            return View(ebooks);
         }
         [HttpGet]
         public ViewResult Create()

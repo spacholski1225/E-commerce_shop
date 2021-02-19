@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EbookViewModel>
+﻿@model IEnumerable<Ebook>
 
 @{
     ViewBag.Title = "All Ebooks";
@@ -7,8 +7,8 @@
 <h1>All Ebooks</h1>
 
 <div class="row">
-    @foreach (var item in Model)
+    @foreach (var ebook in Model)
     {
-    <h1>item.GetAllEbooks</h1>
+        <h1>@ebook.Title</h1>
     }
 </div>
