@@ -60,15 +60,37 @@ namespace Shop.Controllers
             return RedirectToAction("List", "Ebook");
         }
 
+        [HttpGet]
         public ViewResult List()
         {
-            var ebooks = context.Ebooks.Where(x => x.EbookId > 0);
+            var ebooks = context.Ebooks;
             return View(ebooks.ToList());
         }
+        [HttpGet]
+        public ViewResult EducationCategory()
+        {
+            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Education);
+            return View(ebooks.ToList());
+        }
+        [HttpGet]
+        public ViewResult HistoryCategory()
+        {
+            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.History);
+            return View(ebooks.ToList());
+        }
+        [HttpGet]
         public ViewResult HorrorCategory()
         {
             var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Horror);
             return View(ebooks.ToList());
         }
+        [HttpGet]
+        public ViewResult RomanceCategory()
+        {
+            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Romance);
+            return View(ebooks.ToList());
+        }
+
+
     }
 }

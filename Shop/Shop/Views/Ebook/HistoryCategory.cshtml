@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Ebook>
+
+@{
+    ViewBag.Title = "Horror Category";
+}
+
+<div class="row">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                @item.Title, @item.Category
+            </li>
+        }
+    </ul>
+</div>
