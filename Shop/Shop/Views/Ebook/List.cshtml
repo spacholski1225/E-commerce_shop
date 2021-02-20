@@ -3,17 +3,24 @@
 @{
     ViewBag.Title = "All Ebooks";
 }
-
-<h1>All Ebooks</h1>
+<h1 class="display-4">Welcome on shop with ebooks!</h1>
+<br />
+<h2>All Ebooks</h2>
 
 <div class="row">
-    <ul>
-        @foreach (var ebook in Model)
-        {
-            <li class="card-header">
-                @ebook.Title
-            </li>
-        }
-    </ul>
-    
+    @foreach (var ebook in Model)
+    {
+        var photoPath = "~/images/" + (ebook.PhotoPath ?? "noimage.png");
+
+        <div class="card" style="width: 18rem; max-width:25%;">
+            <img class="card-img-top imgThumbnail" src="@photoPath" alt="image" asp-append-version="true">
+            <div class="card-body">
+                <h5 class="card-title">@ebook.Title</h5>
+                <p class="card-text">@ebook.Description</p>
+                <p class="card-text">@(ebook.Price + " zł")</p>
+                <a href="#" class="btn btn-primary">Add to cart</a>
+            </div>
+        </div>
+    }
+
 </div>

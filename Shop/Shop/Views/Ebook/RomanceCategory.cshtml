@@ -1,16 +1,25 @@
 ﻿@model IEnumerable<Ebook>
 
 @{
-    ViewBag.Title = "Horror Category";
+    ViewBag.Title = "Romance ebooks";
 }
 
+<h1>Romance ebooks</h1>
+
 <div class="row">
-    <ul>
-        @foreach (var item in Model)
-        {
-            <li>
-                @item.Title, @item.Category
-            </li>
-        }
-    </ul>
+    @foreach (var ebook in Model)
+    {
+        var photoPath = "~/images/" + (ebook.PhotoPath ?? "noimage.png");
+
+        <div class="card" style="width: 18rem; max-width:25%;">
+            <img class="card-img-top imgThumbnail" src="@photoPath" alt="image" asp-append-version="true">
+            <div class="card-body">
+                <h5 class="card-title">@ebook.Title</h5>
+                <p class="card-text">@ebook.Description</p>
+                <p class="card-text">@(ebook.Price + " zł")</p>
+                <a href="#" class="btn btn-primary">Add to cart</a>
+            </div>
+        </div>
+    }
+
 </div>
