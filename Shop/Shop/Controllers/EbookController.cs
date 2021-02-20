@@ -27,8 +27,8 @@ namespace Shop.Controllers
         //TO DO naprawidz mechanizm wyswietlania sie wszystkich ebookow po przejsciu na liste
         public ViewResult List()
         {
-            var ebooks = context.Ebooks.
-            return View(ebooks);
+            var ebooks = context.Ebooks.Where(x => x.EbookId > 0);
+            return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult Create()

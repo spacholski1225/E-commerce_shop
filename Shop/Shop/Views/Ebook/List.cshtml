@@ -7,8 +7,13 @@
 <h1>All Ebooks</h1>
 
 <div class="row">
-    @foreach (var ebook in Model)
-    {
-        <h1>@ebook.Title</h1>
-    }
+    <ul>
+        @foreach (var ebook in Model)
+        {
+            <li class="card-header">
+                @ebook.Title
+            </li>
+        }
+    </ul>
+    
 </div>
