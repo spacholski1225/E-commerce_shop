@@ -17,16 +17,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ebook" asp-action="List">Ebooks</a>
-                        </li>
                     </ul>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a asp-controller="Ebook" asp-action="EducationCategory" class="dropdown-item">Education</a>
+                            <a asp-controller="Ebook" asp-action="HistoryCategory" class="dropdown-item">History</a>
+                            <a asp-controller="Ebook" asp-action="HorrorCategory" class="dropdown-item">Horror</a>
+                            <a asp-controller="Ebook" asp-action="RomanceCategory" class="dropdown-item">Romance</a>
+                        </div>
+                    </div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ebook" asp-action="Create">Create new ebook</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Ebook" asp-action="Create">Add new ebook</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">

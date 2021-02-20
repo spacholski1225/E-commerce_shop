@@ -25,11 +25,7 @@ namespace Shop.Controllers
         }
 
         //TO DO naprawidz mechanizm wyswietlania sie wszystkich ebookow po przejsciu na liste
-        public ViewResult List()
-        {
-            var ebooks = context.Ebooks.Where(x => x.EbookId > 0);
-            return View(ebooks.ToList());
-        }
+        
         [HttpGet]
         public ViewResult Create()
         {
@@ -62,6 +58,17 @@ namespace Shop.Controllers
                 _ebookRepository.Add(ebook);
             }
             return RedirectToAction("List", "Ebook");
+        }
+
+        public ViewResult List()
+        {
+            var ebooks = context.Ebooks.Where(x => x.EbookId > 0);
+            return View(ebooks.ToList());
+        }
+        public ViewResult HorrorCategory()
+        {
+            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Horror);
+            return View(ebooks.ToList());
         }
     }
 }
