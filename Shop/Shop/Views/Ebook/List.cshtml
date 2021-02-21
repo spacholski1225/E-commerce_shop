@@ -18,6 +18,7 @@
                 <h5 class="card-title">@ebook.Title</h5>
                 <p class="card-text">@ebook.Description</p>
                 <p class="card-text">@(ebook.Price + " zł")</p>
+                <a asp-controller="Ebook" asp-action="Edit" asp-route-id="@ebook.EbookId">Edit</a>
                 <a href="#" class="btn btn-primary">Add to cart</a>
             </div>
         </div>

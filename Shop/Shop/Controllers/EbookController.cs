@@ -24,8 +24,6 @@ namespace Shop.Controllers
             this.context = context;
         }
 
-        //TO DO naprawidz mechanizm wyswietlania sie wszystkich ebookow po przejsciu na liste
-        
         [HttpGet]
         public ViewResult Create()
         {
@@ -36,16 +34,7 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-
-                if(ebookModel.Photo != null)
-                {
-                    //combile two strings to get path to wwwroot
-                    string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + ebookModel.Photo.FileName;
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
-                    ebookModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
-                }
+                string uniqueFileName = ProcessUploadedFile(ebookModel);
 
                 var ebook = new Ebook
                 {
@@ -61,11 +50,69 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(int id)
+        {
+
+            var ebook = _ebookRepository.GetEbookById(id);
+            EditEbookViewModel editEbookViewModel = new EditEbookViewModel
+            {
+                Id = ebook.EbookId,
+                Title = ebook.Title,
+                Description = ebook.Description,
+                Price = ebook.Price,
+                Category = ebook.Category,
+                ExistingPath = ebook.PhotoPath
+            };
+            return View(editEbookViewModel);
+        }
+        [HttpPost]
+        public IActionResult Edit(EditEbookViewModel ebookModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Ebook ebook = _ebookRepository.GetEbookById(ebookModel.Id);
+                ebook.Title = ebookModel.Title;
+                ebook.Description = ebookModel.Description;
+                ebook.Price = ebookModel.Price;
+                ebook.Category = ebookModel.Category;
+                if (ebookModel.Photo != null)
+                {
+                    if(ebookModel.ExistingPath != null)
+                    {
+                       var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", ebookModel.ExistingPath);
+                        System.IO.File.Delete(filePath);
+                    }
+                 ebook.PhotoPath = ProcessUploadedFile(ebookModel);
+                }
+
+                
+                _ebookRepository.Update(ebook);
+            }
+            return RedirectToAction("List", "Ebook");
+        }
+
+        private string ProcessUploadedFile(CreateEbookViewModel ebookModel)
+        {
+            string uniqueFileName = null;
+
+            if (ebookModel.Photo != null)
+            {
+                //combile two strings to get path to wwwroot
+                string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + ebookModel.Photo.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                ebookModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+            }
+
+            return uniqueFileName;
+        }
+
+        [HttpGet]
         public ViewResult List()
         {
-            var ebooks = context.Ebooks;
-            return View(ebooks.ToList());
+            return View(_ebookRepository.GetAllEbooks);
         }
+
         [HttpGet]
         public ViewResult EducationCategory()
         {

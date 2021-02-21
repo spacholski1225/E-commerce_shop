@@ -18,7 +18,7 @@ namespace Shop.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
 
-        public IEnumerable<Ebook> GetAllEbooks { get; }
+        public IEnumerable<Ebook> GetAllEbooks => context.Ebooks.ToList();
 
         public Ebook Add(Ebook ebook)
         {
@@ -34,12 +34,14 @@ namespace Shop.Models
 
         public Ebook GetEbookById(int ebookId)
         {
-            throw new NotImplementedException();
+            return GetAllEbooks.FirstOrDefault(x => x.EbookId == ebookId);
         }
 
         public Ebook Update(Ebook ebook)
         {
-            throw new NotImplementedException();
+            context.Ebooks.Update(ebook);
+            context.SaveChanges();
+            return ebook;
         }
     }
 }
