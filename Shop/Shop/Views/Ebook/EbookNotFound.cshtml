@@ -1,0 +1,10 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Not found";
+
+}
+<div class="bg-danger mt-2 mb-2">
+    <h1>Not found user by id = @Model </h1>
+    <a asp-controller="Ebook" asp-action="List">Back to list</a>
+</div>
