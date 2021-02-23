@@ -6,6 +6,28 @@
 <h1 class="display-4">Welcome on shop with ebooks!</h1>
 <br />
 <h2>All Ebooks</h2>
+<div>
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["LowToHigh"]">Low To High</a>
+            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["HighToLow"]">High To Low</a>
+        </div>
+    </div>
+
+    <form asp-action="List" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by title: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="List">Back to Full List</a>
+            </p>
+        </div>
+    </form>
+</div>
+
 
 <div class="row">
     @foreach (var ebook in Model)
@@ -18,8 +40,11 @@
                 <h5 class="card-title">@ebook.Title</h5>
                 <p class="card-text">@ebook.Description</p>
                 <p class="card-text">@(ebook.Price + " zł")</p>
-                <a asp-controller="Ebook" asp-action="Edit" asp-route-id="@ebook.EbookId">Edit</a>
                 <a href="#" class="btn btn-primary">Add to cart</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-light" asp-controller="Ebook" asp-action="Edit" asp-route-id="@ebook.EbookId">Edit</a>
+                }
             </div>
         </div>
     }

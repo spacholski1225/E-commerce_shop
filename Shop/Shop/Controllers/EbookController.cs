@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Data;
 using Shop.Models;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace Shop.Controllers
 {
+
     public class EbookController : Controller
     {
         private readonly IEbookRepository _ebookRepository;
@@ -25,11 +27,13 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Create(CreateEbookViewModel ebookModel)
         {
             if (ModelState.IsValid)
@@ -50,6 +54,7 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
 
@@ -72,6 +77,7 @@ namespace Shop.Controllers
             return View(editEbookViewModel);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(EditEbookViewModel ebookModel)
         {
             if (ModelState.IsValid)
@@ -114,9 +120,37 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
-        public ViewResult List()
+        public ViewResult List(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
-            return View(_ebookRepository.GetAllEbooks);
+            //TODO FIX po trzeba podwojnie kiknac zeby zaczelo sortowac
+            ViewData["LowToHigh"] = String.IsNullOrEmpty(sortOrder) ? "price_asc" : "";
+            ViewData["HighToLow"] = String.IsNullOrEmpty(sortOrder) ? "price_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            
+
+            var ebooks = _ebookRepository.GetAllEbooks;
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                ebooks = ebooks.Where(s => s.Title.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "price_asc":
+                    ebooks = ebooks.OrderBy(e => e.Price);
+                    
+                    break;
+                case "price_desc":
+                    ebooks = ebooks.OrderByDescending(e => e.Price);
+                    
+                    break;
+                default:
+                    break;
+            }
+
+            return View(ebooks.ToList());
         }
 
         [HttpGet]
