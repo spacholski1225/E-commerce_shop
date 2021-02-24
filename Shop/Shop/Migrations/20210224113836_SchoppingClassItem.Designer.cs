@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Data;
 
 namespace Shop.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210224113836_SchoppingClassItem")]
+    partial class SchoppingClassItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,9 +246,9 @@ namespace Shop.Migrations
                     b.ToTable("Ebooks");
                 });
 
-            modelBuilder.Entity("Shop.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Shop.Models.SchoppingClassItem", b =>
                 {
-                    b.Property<int>("ShoppingCartItemId")
+                    b.Property<int>("SchoppingClassItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -260,11 +262,11 @@ namespace Shop.Migrations
                     b.Property<string>("ShoppingCardId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ShoppingCartItemId");
+                    b.HasKey("SchoppingClassItemId");
 
                     b.HasIndex("EbookId");
 
-                    b.ToTable("ShoppingClassItems");
+                    b.ToTable("SchoppingClassItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -318,7 +320,7 @@ namespace Shop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Shop.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Shop.Models.SchoppingClassItem", b =>
                 {
                     b.HasOne("Shop.Models.Ebook", "Ebook")
                         .WithMany()
