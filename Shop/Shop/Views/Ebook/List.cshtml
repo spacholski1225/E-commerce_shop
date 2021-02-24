@@ -48,5 +48,18 @@
             </div>
         </div>
     }
-
 </div>
+
+@*@{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    }
+    <a class="btn btn-default @prevDisabled" asp-action="List" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@("Model.PageIndex - 1")" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+        Previous
+    </a>
+    <a class="btn btn-default @nextDisabled" asp-action="List" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@("Model.PageIndex + 1")" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+        Next
+    </a>*@

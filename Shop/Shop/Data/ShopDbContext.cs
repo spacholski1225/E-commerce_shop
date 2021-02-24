@@ -15,6 +15,7 @@ namespace Shop.Data
         }
 
         public DbSet<Ebook> Ebooks { get; set; }
+        public DbSet<SchoppingClassItem> SchoppingClassItems{ get; set; }
          
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

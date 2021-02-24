@@ -7,6 +7,7 @@ using Shop.ViewModels;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
@@ -120,14 +121,15 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
-        public ViewResult List(string sortOrder, string searchString, string currentFilter, int? pageNumber)
+        public ViewResult List(string sortOrder, string searchString)
         {
-            //TODO FIX po trzeba podwojnie kiknac zeby zaczelo sortowac
+            //TODO FIX po trzeba podwojnie kiknac zeby zaczelo sortowac oraz dodac paging
             ViewData["LowToHigh"] = String.IsNullOrEmpty(sortOrder) ? "price_asc" : "";
             ViewData["HighToLow"] = String.IsNullOrEmpty(sortOrder) ? "price_desc" : "";
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
 
-            
+
+            ViewData["CurrentFilter"] = searchString;
 
             var ebooks = _ebookRepository.GetAllEbooks;
 
