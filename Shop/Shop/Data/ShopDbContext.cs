@@ -16,6 +16,8 @@ namespace Shop.Data
 
         public DbSet<Ebook> Ebooks { get; set; }
         public DbSet<ShoppingCartItem> ShoppingClassItems{ get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
          
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
