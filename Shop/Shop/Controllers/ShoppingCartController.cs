@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 using Shop.ViewModels;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly IEbookRepository _ebookRepository;

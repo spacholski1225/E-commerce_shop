@@ -11,6 +11,7 @@ using Shop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
+using Shop.Models.ApplicationUser;
 
 namespace Shop
 {
@@ -32,7 +33,7 @@ namespace Shop
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IEbookRepository, SqlEbookRepository>();
-            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 3;
                 opt.Password.RequiredUniqueChars = 0;
