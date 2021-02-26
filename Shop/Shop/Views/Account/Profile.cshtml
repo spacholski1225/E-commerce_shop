@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Account details";
+}
+
+@foreach (var item in Model)
+{
+
+    <div class="card">
+        <ul class="card-body">
+            <li>@item.Email</li>
+            <li>@item.City</li>
+        </ul>
+    </div>
+}

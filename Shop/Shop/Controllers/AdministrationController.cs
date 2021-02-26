@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.ViewModels;
 using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -14,11 +16,13 @@ namespace Shop.Controllers
             this.roleManager = roleManager;
         }
 
+       
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {

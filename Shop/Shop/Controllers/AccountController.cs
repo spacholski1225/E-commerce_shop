@@ -77,5 +77,14 @@ namespace Shop.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            
+            var user = _userManager.Users;
+
+            return View(user);
+        }
     }
 }
