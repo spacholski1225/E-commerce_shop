@@ -19,7 +19,7 @@
             <h2>Current role: @role.Name</h2>
         </div>
         <div class="card-footer">
-            <a class="btn btn-success">Edit</a>
+            <a asp-controller="Administration" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-success">Edit</a>
             <a class="btn btn-success">Delete</a>
         </div>
     </div>
