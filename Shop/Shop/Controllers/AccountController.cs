@@ -29,7 +29,12 @@ namespace Shop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                { 
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+
                 var result = await  _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -76,6 +81,15 @@ namespace Shop.Controllers
                 
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            
+            var user = _userManager.Users;
+
+            return View(user);
         }
     }
 }
