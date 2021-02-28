@@ -1,0 +1,77 @@
+﻿@model EditUserViewModel
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<form method="post" class="mt-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" disabled class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input asp-for="City" class="form-control" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Update</button>
+        <a class="btn btn-success" asp-action="ListUsers">Cancel</a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            User Roles
+        </div>
+        <div class="card-body">
+            @if (Model.Roles.Any())
+            {
+                foreach (var role in Model.Roles)
+                {
+                    <h5 class="card-title">@role</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-titile">User @Model.UserName does not have any roles.</h5>
+            }
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" style="width:auto">Manage Roles</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            User Claims
+        </div>
+        <div class="card-body">
+            @if (Model.Claims.Any())
+            {
+                foreach (var claims in Model.Roles)
+                {
+                    <h5 class="card-title">@claims</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-titile">User @Model.UserName does not have any claims.</h5>
+            }
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" style="width:auto">Manage Claims</a>
+        </div>
+    </div>
+
+
+</form>
