@@ -268,5 +268,35 @@ namespace Shop.Controllers
             }
             return View(model);
         }
+
+ 
+        [HttpPost ]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if(user == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("../Error/NotFound.cshtml");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if(result.Succeeded)
+            {
+                return RedirectToAction("ListUsers");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View("ListUsers");
+        }
+
     }
 }
