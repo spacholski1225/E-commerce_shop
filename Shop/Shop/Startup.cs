@@ -53,6 +53,14 @@ namespace Shop
             });
             services.AddMemoryCache();
             services.AddSession();
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "482773798445-o2a2m53f34lt1ejif97lq945pmgv9lo3.apps.googleusercontent.com";
+                options.ClientSecret = "vwlYHUCOA-2Nr5J2E61smdzG";
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
