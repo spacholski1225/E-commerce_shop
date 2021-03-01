@@ -30,15 +30,27 @@ namespace Shop.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
-                { 
+                {
                     UserName = model.Email,
                     Email = model.Email
                 };
 
-                var result = await  _userManager.CreateAsync(user, model.Password);
+
+
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    var emailEnd = user.NormalizedEmail.Split('@').Last();
+                    if (emailEnd == "ADMIN.COM")
+                    {
+                       await _userManager.AddToRoleAsync(user, "Admin");
+
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "home");
                 }
@@ -78,7 +90,7 @@ namespace Shop.Controllers
 
 
                 ModelState.AddModelError(String.Empty, "Invalid Login Attempt");
-                
+
             }
             return View(model);
         }
@@ -86,7 +98,7 @@ namespace Shop.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-            
+
             var user = _userManager.Users;
 
             return View(user);
