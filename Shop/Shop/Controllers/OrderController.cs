@@ -21,7 +21,14 @@ namespace Shop.Controllers
         }
         public IActionResult Checkout()
         {
-            return View();
+            if (_shopping.GetShoppingCartTotal() != 0)
+            {
+                return View();
+            }
+
+            ViewBag.ErrorTitle = "Cart is empty";
+            ViewBag.ErrorMessage = "Please add something";
+            return View("NotFound");
         }
     }
 }

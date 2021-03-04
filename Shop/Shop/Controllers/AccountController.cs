@@ -80,7 +80,7 @@ namespace Shop.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("list", "ebook");
         }
 
         [HttpGet]
@@ -132,7 +132,7 @@ namespace Shop.Controllers
         {
             if(userId == null || token == null)
             {
-                return RedirectToAction("index", "home");
+                return RedirectToAction("list", "ebook");
             }
 
             var user = await _userManager.FindByIdAsync(userId);

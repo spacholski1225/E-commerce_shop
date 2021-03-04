@@ -7,16 +7,6 @@
 <br />
 <h2>All Ebooks</h2>
 <div>
-    <div class="dropdown">
-        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by:
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["LowToHigh"]">Low To High</a>
-            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["HighToLow"]">High To Low</a>
-        </div>
-    </div>
-
     <form asp-action="List" method="get">
         <div class="form-actions no-color">
             <p>
@@ -26,6 +16,15 @@
             </p>
         </div>
     </form>
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["LowToHigh"]">Low To High</a>
+            <a asp-action="List" class="dropdown-item" asp-route-sortOrder="@ViewData["HighToLow"]">High To Low</a>
+        </div>
+    </div>
 </div>
 
 

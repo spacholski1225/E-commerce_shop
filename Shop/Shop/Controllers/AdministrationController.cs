@@ -226,6 +226,8 @@ namespace Shop.Controllers
             {
                 Id = user.Id,
                 City = user.City,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Email = user.Email,
                 UserName = user.UserName,
                 Claims = userClaims.Select(s => s.Value).ToList(),
