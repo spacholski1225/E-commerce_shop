@@ -128,14 +128,14 @@ namespace Shop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if(userId == null || token == null)
+            if (userId == null || token == null)
             {
                 return RedirectToAction("list", "ebook");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
 
-            if(user == null)
+            if (user == null)
             {
                 ViewBag.ErrorMessage = $"The User ID {userId} is invalid";
                 return View("NotFound");
@@ -148,15 +148,6 @@ namespace Shop.Controllers
             }
             ViewBag.ErrorTitle = "Email cannot be confirmed";
             return View("NotFound");
-        }
-
-        [HttpGet]
-        public IActionResult Profile()
-        {
-
-            var user = _userManager.Users;
-
-            return View(user);
         }
 
         [AllowAnonymous]
@@ -174,7 +165,7 @@ namespace Shop.Controllers
         }
 
         [AllowAnonymous]
-        public async  Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             LoginViewModel loginViewModel = new LoginViewModel
@@ -183,7 +174,7 @@ namespace Shop.Controllers
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
             };
 
-            if(remoteError != null)
+            if (remoteError != null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
                 return View("Login", loginViewModel);
@@ -191,7 +182,7 @@ namespace Shop.Controllers
 
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
-            if(info == null)
+            if (info == null)
             {
                 ModelState.AddModelError(string.Empty, "Error loading external login information.");
                 return View("Login", loginViewModel);
@@ -211,9 +202,9 @@ namespace Shop.Controllers
             }
 
 
-            if(email != null)
+            if (email != null)
             {
-                if(user == null)
+                if (user == null)
                 {
                     user = new ApplicationUser
                     {
@@ -232,6 +223,57 @@ namespace Shop.Controllers
             ViewBag.ErrorMessage = "Please contact with support";
 
             return View("Error");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(string name)
+        {
+            var user = await _userManager.FindByEmailAsync(name);
+
+            if(user == null)
+            {
+                return RedirectToAction("list", "ebook");
+            }
+            var model = new ApplicationUser
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                City = user.City,
+                Email = user.Email
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(ApplicationUser model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+                return RedirectToAction("list", "ebook");
+
+            var updatedUser = new ApplicationUser
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                City = user.City
+            };
+
+            var result = await _userManager.UpdateAsync(updatedUser);
+            if (result.Succeeded)
+                return RedirectToAction("list", "ebook");
+
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                    return RedirectToAction("list", "ebook");
+                }
+            }
+
+            return View(model);
         }
     }
 }

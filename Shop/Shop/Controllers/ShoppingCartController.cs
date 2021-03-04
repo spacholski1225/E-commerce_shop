@@ -44,7 +44,7 @@ namespace Shop.Controllers
             {
                 _shoppingCart.AddToCart(selectedEbook, 1);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("list", "ebook");
         }
         public RedirectToActionResult RemoveFromShoppingCart(int ebookId)
         {
