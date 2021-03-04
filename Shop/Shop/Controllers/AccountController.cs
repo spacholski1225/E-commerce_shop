@@ -52,12 +52,10 @@ namespace Shop.Controllers
                     _logger.Log(LogLevel.Warning, confirmationLink);
 
 
-
                     var emailEnd = user.NormalizedEmail.Split('@').Last();
                     if (emailEnd == "ADMIN.COM")
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
-
                     }
                     else
                     {
