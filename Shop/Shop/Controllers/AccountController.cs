@@ -37,7 +37,11 @@ namespace Shop.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    City = model.City
+                   
                 };
 
 
@@ -53,7 +57,7 @@ namespace Shop.Controllers
 
 
                     var emailEnd = user.NormalizedEmail.Split('@').Last();
-                    if (emailEnd == "ADMIN.COM")
+                    if (emailEnd == "ECOMMERCE.COM")
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
                     }
