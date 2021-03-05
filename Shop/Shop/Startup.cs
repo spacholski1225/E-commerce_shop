@@ -1,16 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Shop.Models;
-using Shop.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Http;
 using Shop.Models.ApplicationUser;
 
 namespace Shop
@@ -40,7 +38,10 @@ namespace Shop
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<ShopDbContext>();
+
+                opt.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<ShopDbContext>()
+              .AddDefaultTokenProviders();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
@@ -53,6 +54,14 @@ namespace Shop
             });
             services.AddMemoryCache();
             services.AddSession();
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "482773798445-o2a2m53f34lt1ejif97lq945pmgv9lo3.apps.googleusercontent.com";
+                options.ClientSecret = "vwlYHUCOA-2Nr5J2E61smdzG";
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
