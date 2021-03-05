@@ -228,14 +228,14 @@ namespace Shop.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile(string name)
         {
-            var user = await _userManager.FindByEmailAsync(name);
-
+            var user = await _userManager.FindByNameAsync(name);
             if(user == null)
             {
                 return RedirectToAction("list", "ebook");
             }
-            var model = new ApplicationUser
+            var model = new ProfileViewModel
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 City = user.City,
@@ -245,22 +245,20 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Profile(ApplicationUser model)
+        public async Task<IActionResult> Profile(ProfileViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 
             if (user == null)
                 return RedirectToAction("list", "ebook");
 
-            var updatedUser = new ApplicationUser
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                City = user.City
-            };
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.City = model.City;
+            user.Email = model.Email;
+            
 
-            var result = await _userManager.UpdateAsync(updatedUser);
+            var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
                 return RedirectToAction("list", "ebook");
 
