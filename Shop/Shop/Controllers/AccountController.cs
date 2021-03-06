@@ -101,7 +101,7 @@ namespace Shop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-
+            
             model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
@@ -110,7 +110,13 @@ namespace Shop.Controllers
 
                 if (user != null && !user.EmailConfirmed && (await _userManager.CheckPasswordAsync(user, model.Password)))
                 {
-                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+
+                    _logger.Log(LogLevel.Warning, confirmationLink); // generate confirmation token in to log file
+
+                    ModelState.AddModelError(string.Empty, "Email not confirmed yet. Check your e-mail and confirm account.");
                     return View(model);
                 }
 
