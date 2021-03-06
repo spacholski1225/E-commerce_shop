@@ -158,25 +158,25 @@ namespace Shop.Controllers
         [HttpGet]
         public ViewResult EducationCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Education);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Education);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult HistoryCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.History);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.History);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult HorrorCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Horror);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Horror);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult RomanceCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Romance);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Romance);
             return View(ebooks.ToList());
         }
 

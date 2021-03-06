@@ -34,7 +34,7 @@
     <div class="form-group row">
         <label asp-for="Category" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="Category" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<ECategories>()">
+            <select asp-for="Category" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<EEbookCategory>()">
                 <option value="">Select</option>
             </select>
             <span asp-validation-for="Category" class="text-danger"></span>

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Shop.Models
+namespace Shop.Models.Enums
 {
-    public enum ECategories
+    public enum EVideoCategory
     {
         Education,
-        History,
-        Horror,
-        Romance
+        Marketing,
+        Information,
+        Other
     }
 }

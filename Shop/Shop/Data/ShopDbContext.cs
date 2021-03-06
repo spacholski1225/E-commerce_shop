@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Models;
 using Shop.Models.ApplicationUser;
+using Shop.Models.Videos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Shop.Data
         }
 
         public DbSet<Ebook> Ebooks { get; set; }
+        public DbSet<Video> Videos{ get; set; }
         public DbSet<ShoppingCartItem> ShoppingClassItems{ get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
