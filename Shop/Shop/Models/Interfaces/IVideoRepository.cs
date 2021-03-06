@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Models.Interfaces
 {
-    interface IVideoRepository
+    public interface IVideoRepository
     {
         IEnumerable<Video> GetAllVideos();
         Video GetVideoById(int id);

@@ -18,7 +18,6 @@ namespace Shop.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ShopDbContext context;
 
-        // private readonly IHostingEnvironment _hostingEnvironment;
 
         public EbookController(IEbookRepository ebookRepository, IWebHostEnvironment hostingEnvironment, ShopDbContext context)
         {

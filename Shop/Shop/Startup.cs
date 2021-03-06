@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Shop.Data;
 using Shop.Models;
 using Shop.Models.ApplicationUser;
+using Shop.Models.Interfaces;
+using Shop.Models.Videos;
 
 namespace Shop
 {
@@ -31,6 +33,7 @@ namespace Shop
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IEbookRepository, SqlEbookRepository>();
+            services.AddScoped<IVideoRepository, SqlVideoRepository>();
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 3;
