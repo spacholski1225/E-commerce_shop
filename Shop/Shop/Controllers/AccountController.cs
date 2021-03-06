@@ -118,7 +118,7 @@ namespace Shop.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("list", "ebook");
                 }
 
 
