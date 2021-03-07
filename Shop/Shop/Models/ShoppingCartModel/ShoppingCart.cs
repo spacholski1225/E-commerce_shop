@@ -82,7 +82,8 @@ namespace Shop.Models
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingClassItems.Where(c => c.ShoppingCardId == ShoppingCartId)
-                                        .Include(x => x.Ebook).ToList());
+                                        .Include(x => x.Ebook)
+                                        .ToList());
         }
         
         public void ClearCart()

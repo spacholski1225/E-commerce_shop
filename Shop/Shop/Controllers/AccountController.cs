@@ -41,7 +41,7 @@ namespace Shop.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     City = model.City
-                   
+
                 };
 
 
@@ -101,7 +101,7 @@ namespace Shop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            
+
             model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
@@ -239,7 +239,7 @@ namespace Shop.Controllers
         public async Task<IActionResult> Profile(string name)
         {
             var user = await _userManager.FindByNameAsync(name);
-            if(user == null)
+            if (user == null)
             {
                 return RedirectToAction("list", "ebook");
             }
@@ -266,7 +266,7 @@ namespace Shop.Controllers
             user.LastName = model.LastName;
             user.City = model.City;
             user.Email = model.Email;
-            
+
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -283,5 +283,74 @@ namespace Shop.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null && (await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var passwordResetLink = Url.Action("ResetPassword", "Account",
+                            new { email = model.Email, token = token }, Request.Scheme);
+
+                    _logger.Log(LogLevel.Warning, passwordResetLink); //saved passwordResetLink into log file
+
+                    return View("ForgotPasswordConfirmation");
+
+                }
+                return View("ForgotPasswordConfirmation");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            if (token == null || email == null)
+            {
+                ModelState.AddModelError("", "Invalid password reset token");
+            }
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Login", "account");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                        return View(model);
+                    }
+                }
+                ViewBag.ErrorMessage = "Not found user ;C";
+                return RedirectToAction("NotFound");
+            }
+            return View(model);
+        }
+
     }
 }

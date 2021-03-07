@@ -23,7 +23,6 @@ namespace Shop.Components
                 ShoppingCart = shoppingCart,
                 ShoppingCartTotal = shoppingCart.GetShoppingCartTotal()
             };
-
             return View(shoppingCartViewModel);
         }
     }
