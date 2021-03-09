@@ -1,14 +1,8 @@
-﻿@model EditEbookViewModel
-
+﻿@model CreateVideoViewModel
 @{
-    ViewData["Title"] = "Edit ebook";
-
+    ViewBag.Title = "Create new Video";
 }
-<h1>Edit ebook</h1>
-
-<form enctype="multipart/form-data" asp-controller="Ebook" asp-action="Edit" method="post" class="mt-3">
-    <input hidden asp-for="Id"/>
-    <input hidden asp-for="ExistingPath"/>
+<form enctype="multipart/form-data" asp-controller="Video" asp-action="Create" method="post" class="mt-3">
     <div class="form-group row">
         <label asp-for="Title" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -34,7 +28,7 @@
     <div class="form-group row">
         <label asp-for="Category" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="Category" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<EEbookCategory>()">
+            <select asp-for="Category" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<EVideoCategory>()">
                 <option value="">Select</option>
             </select>
             <span asp-validation-for="Category" class="text-danger"></span>
@@ -46,14 +40,13 @@
         <div class="col-sm-10">
             <div class="custom-file">
                 <input asp-for="Photo" class="form-control custom-file-input" />
-                <label class="custom-file-label">Click to change photo.</label>
+                <label class="custom-file-label">Choose File</label>
             </div>
         </div>
     </div>
     <div class="form-group" row>
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-success">Update</button>
-            <a class="btn btn-success" asp-controller="Ebook" asp-action="List">Cancel</a>
+            <button type="submit" class="btn btn-success">Create</button>
         </div>
     </div>
     @section Scripts {

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shop.Models
 {
@@ -29,7 +28,9 @@ namespace Shop.Models
 
         public Ebook Delete(Ebook ebook)
         {
-            throw new NotImplementedException();
+            context.Ebooks.Remove(ebook);
+            context.SaveChanges();
+            return ebook;
         }
 
         public Ebook GetEbookById(int ebookId)

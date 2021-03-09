@@ -18,7 +18,6 @@ namespace Shop.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ShopDbContext context;
 
-        // private readonly IHostingEnvironment _hostingEnvironment;
 
         public EbookController(IEbookRepository ebookRepository, IWebHostEnvironment hostingEnvironment, ShopDbContext context)
         {
@@ -123,7 +122,6 @@ namespace Shop.Controllers
         [HttpGet]
         public ViewResult List(string sortOrder, string searchString)
         {
-            //TODO FIX po trzeba podwojnie kiknac zeby zaczelo sortowac oraz dodac paging
             ViewData["LowToHigh"] = String.IsNullOrEmpty(sortOrder) ? "price_asc" : "";
             ViewData["HighToLow"] = String.IsNullOrEmpty(sortOrder) ? "price_desc" : "";
             ViewData["CurrentSort"] = sortOrder;
@@ -158,25 +156,25 @@ namespace Shop.Controllers
         [HttpGet]
         public ViewResult EducationCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Education);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Education);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult HistoryCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.History);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.History);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult HorrorCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Horror);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Horror);
             return View(ebooks.ToList());
         }
         [HttpGet]
         public ViewResult RomanceCategory()
         {
-            var ebooks = context.Ebooks.Where(x => x.Category == ECategories.Romance);
+            var ebooks = context.Ebooks.Where(x => x.Category == EEbookCategory.Romance);
             return View(ebooks.ToList());
         }
 
