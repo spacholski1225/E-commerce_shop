@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Shop.Controllers
 {
 
+    [Authorize]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

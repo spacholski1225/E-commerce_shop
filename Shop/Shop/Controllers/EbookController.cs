@@ -122,7 +122,6 @@ namespace Shop.Controllers
         [HttpGet]
         public ViewResult List(string sortOrder, string searchString)
         {
-            //TODO FIX po trzeba podwojnie kiknac zeby zaczelo sortowac oraz dodac paging
             ViewData["LowToHigh"] = String.IsNullOrEmpty(sortOrder) ? "price_asc" : "";
             ViewData["HighToLow"] = String.IsNullOrEmpty(sortOrder) ? "price_desc" : "";
             ViewData["CurrentSort"] = sortOrder;

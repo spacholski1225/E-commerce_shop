@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
