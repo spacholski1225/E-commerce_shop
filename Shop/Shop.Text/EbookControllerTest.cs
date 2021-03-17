@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using Shop.Controllers;
@@ -14,28 +16,29 @@ using System.Threading.Tasks;
 
 namespace Shop.Test
 {
-    [TestFixture]
+    
     public class EbookControllerTest
     {
-        private readonly Mock<IEbookRepository> _ebookRepoMock;
-        private readonly Mock<IWebHostEnvironment> _hostingEnvironmentMock;
-        private readonly Mock<ShopDbContext> _contextMock;
+        private Mock<IEbookRepository> _ebookRepoMock;
+        private Mock<IWebHostEnvironment> _hostingEnvironmentMock;
 
-        private readonly EbookController _controller;
-        public EbookControllerTest()
+       
+        [SetUp]
+        public  void Setup()
         {
             _ebookRepoMock = new Mock<IEbookRepository>();
             _hostingEnvironmentMock = new Mock<IWebHostEnvironment>();
-            _contextMock = new Mock<ShopDbContext>();
 
-            _controller = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object, _contextMock.Object);
+            //_controller = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object, _contextMock.Object);
         }
 
         [Test]
-        public void Create_CreateNew_ExpectTrue()
+        public async Task Create_CreateNew_ExpectTrue()
         {
-            bool test = false;
-            string message = "";
+            bool testFlag = false;
+            var _context = await GetDatabaseContext();
+            EbookController ebookController = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object,
+                                                                  _context);
 
             var mockEbook = new CreateEbookViewModel
             {
@@ -46,22 +49,30 @@ namespace Shop.Test
                
             };
 
-           _controller.Create(mockEbook);
 
-            var result = _ebookRepoMock.Object.GetAllEbooks.ToList();
+            var result = ebookController.Create(mockEbook);
 
-            if (result.Count > 0)
+            if(_context.Ebooks.Count() >= 0)
             {
-                test = true;
-                message = "";
+                testFlag = true;
             }
             else
             {
-                test = false;
-                message = "Error ebook does not add";
+                testFlag = false;
             }
 
-            Assert.IsTrue(test, message);
+            Assert.True(testFlag);
+        }
+
+        private async Task<ShopDbContext> GetDatabaseContext()
+        {
+            var options = new DbContextOptionsBuilder<ShopDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+            var databaseContext = new ShopDbContext(options);
+            databaseContext.Database.EnsureCreated();
+
+            return databaseContext;
         }
     }
 }
