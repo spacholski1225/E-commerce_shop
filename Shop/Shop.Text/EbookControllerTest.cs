@@ -21,24 +21,24 @@ namespace Shop.Test
     {
         private Mock<IEbookRepository> _ebookRepoMock;
         private Mock<IWebHostEnvironment> _hostingEnvironmentMock;
+        private EbookController ebookController;
+        ShopDbContext _context => GetDatabaseContext();
 
-       
+
         [SetUp]
         public  void Setup()
         {
             _ebookRepoMock = new Mock<IEbookRepository>();
             _hostingEnvironmentMock = new Mock<IWebHostEnvironment>();
 
-            //_controller = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object, _contextMock.Object);
+            ebookController = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object,
+                                                _context);
         }
 
         [Test]
-        public async Task Create_CreateNew_ExpectTrue()
+        public void Create_CreateNewValidModel_ExpectTrue()
         {
             bool testFlag = false;
-            var _context = await GetDatabaseContext();
-            EbookController ebookController = new EbookController(_ebookRepoMock.Object, _hostingEnvironmentMock.Object,
-                                                                  _context);
 
             var mockEbook = new CreateEbookViewModel
             {
@@ -50,27 +50,46 @@ namespace Shop.Test
             };
 
 
-            var result = ebookController.Create(mockEbook);
+            ebookController.Create(mockEbook);
 
-            if(_context.Ebooks.Count() >= 0)
-            {
+            if(_context.Ebooks.Count() > 0)
                 testFlag = true;
-            }
             else
-            {
                 testFlag = false;
-            }
 
             Assert.True(testFlag);
         }
 
-        private async Task<ShopDbContext> GetDatabaseContext()
+        [Test]
+        public void Edit_GetModelToEdit_ExpectViewResult()
+        {
+           
+            var result = ebookController.Edit(1);
+            
+            Assert.That(result, Is.InstanceOf<ViewResult>());
+        }
+
+        private ShopDbContext GetDatabaseContext()
         {
             var options = new DbContextOptionsBuilder<ShopDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var databaseContext = new ShopDbContext(options);
             databaseContext.Database.EnsureCreated();
+            
+            if(databaseContext.Ebooks.Count() <= 0)
+            {
+                databaseContext.Add(new Ebook()
+                {
+                    EbookId = 0,
+                    Title = "Title",
+                    Description = "Description",
+                    Price = 1,
+                    Category = EEbookCategory.Horror
+
+                });
+                databaseContext.SaveChanges();
+            }
 
             return databaseContext;
         }

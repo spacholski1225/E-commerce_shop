@@ -61,7 +61,14 @@ namespace Shop.Controllers
             var ebook = _ebookRepository.GetEbookById(id);
             if (ebook is null)
             {
+                try
+                {
                 Response.StatusCode = 404;
+                }
+                catch(Exception e)
+                {
+
+                }
                 return View("EbookNotFound", id);
             }
 
