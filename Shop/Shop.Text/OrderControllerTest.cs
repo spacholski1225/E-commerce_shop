@@ -9,7 +9,7 @@ using System;
 
 namespace Shop.Test
 {
-    class OrderControllerTest
+    public class OrderControllerTest
     {
         private ShoppingCart _shoppingCartMock;
         private Mock<IOrderRepository> _orderRepositoryMock;
