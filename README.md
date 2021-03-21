@@ -17,8 +17,7 @@ I wanted to create something useful for business. I have chosen an e-commerce sh
 List of features ready and TODOs for future development
 * Addition new products by admin panel
 * Registration with confirmation or by Google and reset the password by token
-* Information about the order saved in the logs
-* 
+* Information about the order saved in the logs 
 
 ## Status
 Project is: Suspended.
