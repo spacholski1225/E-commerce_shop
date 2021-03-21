@@ -13,17 +13,12 @@ I wanted to create something useful for business. I have chosen an e-commerce sh
 * NLog v4.7.8
 * Authentication Google v5.0.3
 
-## Setup
-Describe how to install / setup your local environement / add link to demo version.
-
 ## Features
 List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+* Addition new products by admin panel
+* Registration with confirmation or by Google and reset the password by token
+* Information about the order saved in the logs
+* 
 
 ## Status
-Project is: _in progress_, _finished_, _no longer continue_ and why?
-
-## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+Project is: Suspended.
