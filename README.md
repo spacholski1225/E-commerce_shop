@@ -6,6 +6,7 @@ I wanted to create something useful for business. I have chosen an e-commerce sh
 
 ## Technologies
 * .NET 5.0
+* ASP.NET Core MVC
 * Bootstrap v4.3.1
 * nUnit v3.12
 * Entity Framework Core v5.0.3
