@@ -21,4 +21,4 @@ List of features ready
 * Information about the order saved in the logs 
 
 ## Status
-Project is: Suspended.
+Project is: Finished.
